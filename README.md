@@ -21,8 +21,10 @@
 
 ### Introduction
 
-<p align="center">
-  <img height="400px" src="https://github.com/user-attachments/assets/dab87ea2-58be-424c-b1ef-6071786cb504" />
+<p align="center"">
+  <img height="400px" src="https://github.com/user-attachments/assets/72813239-7bb7-4966-a1b9-0ae1d0f7c6d0" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img height="400px" src="https://github.com/user-attachments/assets/c78f88f9-bbb7-4bad-91a8-13633ce35d4a" />
 </p>
 
 **LLM Connector** is a plugin that provides out-of-the-box integrations with large language models (LLMs). The plugin ships with built-in support for 4 default LLM providers which are [**OpenAI**](docs/providers/OpenAI),[**Gemini**](/docs/providers//Gemini), [**WebLlm (in-browser)**](/docs/providers/WebLlm) and [**Wllama (in-browser)**](docs/providers/Wllama). Developers may also create their own providers beyond those that are provided to support niche or custom use cases. The plugin also provides generalized configurations for managing streaming behavior, chat history inclusion and audio output, greatly simplifying the amount of custom logic required from developers.
