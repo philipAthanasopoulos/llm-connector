@@ -36,7 +36,7 @@ class GeminiProvider implements Provider {
 		const baseUrl = config.baseUrl ?? 'https://generativelanguage.googleapis.com/v1beta';
 		if (config.mode === 'direct') {
 			this.endpoint =
-				config.responseFormat === 'stream'
+				this.responseFormat === 'stream'
 					? `${baseUrl}/models/${config.model}:streamGenerateContent?alt=sse&key=${config.apiKey || ''}`
 					: `${baseUrl}/models/${config.model}:generateContent?key=${config.apiKey || ''}`;
 		} else if (config.mode === 'proxy') {
