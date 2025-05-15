@@ -52,7 +52,7 @@
   "peerDependencies": {
     "react": ">=16.14.0",
     "react-dom": ">=16.14.0",
-    "react-chatbotify": "^2.0.0-beta.33",
+    "react-chatbotify": "^2.0.0-beta.36",
     "@mlc-ai/web-llm": "^0.2.78",
     "@wllama/wllama": "^2.3.1"
   },
