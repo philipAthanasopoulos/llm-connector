@@ -133,9 +133,19 @@ The `llmConnector` attribute is added to the Block that you are keen to integrat
 | Property         | Type     | Default Value                                                                                                                                                                                                                 | Description                                                                                                               |
 |------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
 | `provider`                 | Provider | null                                                                                                                                                                                                                        | The LLM Provider to use in this block. |
-| `historySize`                 | number | `0`                                                                                                                                                                                                                        | Default number of messages from chat history to include when sending messages to LLMs. |
 | `outputType`                 | string | `chunk`                                                                                                                                                                                                                        | Output type for the LLM response (`character`, `chunk` or `full`). If set to `character` or `chunk`, output will be streamed by character or chunk respectively. If set to `full`, then the output will be sent fully in one go. |
 | `outputSpeed`                | number | `30`                                                                                                                                                                                                                        | Output speed in milliseconds (applicable only if `outputType` is set to `character` or `chunk`). |
+| `historySize`                 | number | `0`                                                                                                                                                                                                                        | Default number of messages from chat history to include when sending messages to LLMs. |
+
+
+
+| `initialMessage`                 | string | ""                                                                                                                                                                                                                        | Initial message to send in the chat. |
+| `errorMessage`                 | string | `Unable to get response, please try again.`                                                                                                                                                                                                                        | Error message shown on failure to fetch a response. |
+
+
+
+
+
 | `stopConditions`                 | object | null                                                                                                                                                                                                                        | An object containing possible stop conditions to end an LLM conversation (more information on stopConditions [**here**](#ending-llm-conversations)). |
 
 #### LLM Providers
