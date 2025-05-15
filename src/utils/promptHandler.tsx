@@ -35,6 +35,7 @@ const handlePrompt = async (
 		outputTypeRef: React.MutableRefObject<'character' | 'chunk' | 'full'>;
 		outputSpeedRef: React.MutableRefObject<number>;
 		historySizeRef: React.MutableRefObject<number>;
+		initialMessageRef: React.MutableRefObject<string>;
 		errorMessageRef: React.MutableRefObject<string>;
 		onUserMessageRef: React.MutableRefObject<((msg: Message) => Promise<string | null>) | null>;
 		onKeyDownRef: React.MutableRefObject<((e: KeyboardEvent) => Promise<string | null>) | null>;

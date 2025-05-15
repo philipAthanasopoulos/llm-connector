@@ -27,6 +27,7 @@ const useMessageHandler = (
 		outputTypeRef: React.MutableRefObject<'character' | 'chunk' | 'full'>;
 		outputSpeedRef: React.MutableRefObject<number>;
 		historySizeRef: React.MutableRefObject<number>;
+		initialMessageRef: React.MutableRefObject<string>;
 		errorMessageRef: React.MutableRefObject<string>;
 		onUserMessageRef: React.MutableRefObject<((msg: Message) => Promise<string | null>) | null>;
 		onKeyDownRef: React.MutableRefObject<((e: KeyboardEvent) => Promise<string | null>) | null>;
@@ -43,7 +44,7 @@ const useMessageHandler = (
 		goToPath: (path: string) => void;
 	}
 ) => {
-	const { messagesRef, outputTypeRef, onUserMessageRef, onKeyDownRef } = refs;
+	const { messagesRef, outputTypeRef, onUserMessageRef, onKeyDownRef, errorMessageRef } = refs;
 	const {
 		injectMessage,
 		simulateStreamMessage,
@@ -102,9 +103,9 @@ const useMessageHandler = (
 					});
 					console.error('LLM prompt failed', err);
 					if (outputTypeRef.current === "full") {
-						injectMessage(refs.errorMessageRef.current);
+						injectMessage(errorMessageRef.current);
 					} else {
-						simulateStreamMessage(refs.errorMessageRef.current);
+						simulateStreamMessage(errorMessageRef.current);
 					}
 				});
 			}, STREAM_DEBOUNCE_MS);

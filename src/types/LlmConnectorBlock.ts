@@ -10,6 +10,7 @@ export type LlmConnectorBlock = Block & {
 		outputType?: 'character' | 'chunk' | 'full';
 		outputSpeed?: number;
 		historySize?: number;
+		initialMessage?: string;
 		errorMessage?: string;
 		stopConditions?: {
 			onUserMessage?: (message: Message) => Promise<string | null>;

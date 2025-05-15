@@ -29,6 +29,7 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 	const outputTypeRef = useRef<'character' | 'chunk' | 'full'>('chunk');
 	const outputSpeedRef = useRef<number>(30);
 	const historySizeRef = useRef<number>(0);
+	const initialMessageRef = useRef<string>("");
 	const errorMessageRef = useRef<string>('Unable to get response, please try again.');
 	const onUserMessageRef = useRef<((msg: Message) => Promise<string | null>) | null>(null);
 	const onKeyDownRef = useRef<((e: KeyboardEvent) => Promise<string | null>) | null>(null);
@@ -54,39 +55,41 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 		outputTypeRef.current = block.llmConnector?.outputType ?? 'chunk';
 		outputSpeedRef.current = block.llmConnector?.outputSpeed ?? 30;
 		historySizeRef.current = block.llmConnector?.historySize ?? 0;
+		initialMessageRef.current = block.llmConnector?.initialMessage ?? "";
 		errorMessageRef.current = block.llmConnector?.errorMessage ?? 'Unable to get response, please try again.';
 		onUserMessageRef.current = block.llmConnector?.stopConditions?.onUserMessage ?? null;
 		onKeyDownRef.current = block.llmConnector?.stopConditions?.onKeyDown ?? null;
 	});
 
+	const refs = {
+		providerRef,
+		messagesRef,
+		outputTypeRef,
+		outputSpeedRef,
+		historySizeRef,
+		initialMessageRef,
+		errorMessageRef,
+		onUserMessageRef,
+		onKeyDownRef,
+	};
+
+	const actions = {
+		speakAudio,
+		injectMessage,
+		simulateStreamMessage,
+		streamMessage,
+		endStreamMessage,
+		toggleTextAreaDisabled,
+		toggleIsBotTyping,
+		focusTextArea,
+		goToPath,
+	};
+
 	// handles pre-processing and post-processing of blocks.
-	useProcessBlock(getBotId, toggleIsBotTyping, toggleTextAreaDisabled, focusTextArea);
+	useProcessBlock(getBotId, refs, actions);
 
 	// handles message events
-	useMessageHandler(
-		getBotId,
-		{
-			providerRef,
-			messagesRef,
-			outputTypeRef,
-			outputSpeedRef,
-			historySizeRef,
-			errorMessageRef,
-			onUserMessageRef,
-			onKeyDownRef,
-		},
-		{
-			speakAudio,
-			injectMessage,
-			simulateStreamMessage,
-			streamMessage,
-			endStreamMessage,
-			toggleTextAreaDisabled,
-			toggleIsBotTyping,
-			focusTextArea,
-			goToPath,
-		}
-	);
+	useMessageHandler(getBotId, refs, actions);
 
 	// initializes plugin metadata with plugin name
 	const pluginMetaData: ReturnType<Plugin> = { name: '@rcb-plugins/llm-connector' };
