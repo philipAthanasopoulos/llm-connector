@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import {
 	RcbPostInjectMessageEvent,
 	RcbStopStreamMessageEvent,
@@ -45,6 +45,9 @@ const useMessageHandler = (
 	const { messagesRef, onUserMessageRef, onKeyDownRef } = refs;
 	const { injectMessage, toggleTextAreaDisabled, toggleIsBotTyping, goToPath, focusTextArea, } = actions;
 
+	// controller to abort streaming responses if required
+    const abortControllerRef = useRef<AbortController | null>(null);
+
 	/**
 	 * Handles message events to determine whether to prompt LLM.
 	 *
@@ -69,6 +72,8 @@ const useMessageHandler = (
 				if (onUserMessageRef.current) {
 					const path = await onUserMessageRef.current(msg);
 					if (path) {
+						abortControllerRef.current?.abort();
+						abortControllerRef.current = null;
 						return goToPath(path);
 					}
 				}
@@ -76,8 +81,12 @@ const useMessageHandler = (
 				const historySize = refs.historySizeRef.current;
 				const past = messagesRef.current;
 				const messagesToSend = historySize ? [...past.slice(-(historySize - 1)), msg] : [msg];
+				
+				// create & stash a new controller
+                const ctrl = new AbortController();
+                abortControllerRef.current = ctrl;
 
-				handlePrompt(messagesToSend, refs, actions).catch((err) => {
+				handlePrompt(messagesToSend, refs, actions, { signal: ctrl.signal }).catch((err) => {
 					toggleIsBotTyping(false);
 					toggleTextAreaDisabled(false);
 					setTimeout(() => {
@@ -109,6 +118,8 @@ const useMessageHandler = (
 			if (onKeyDownRef.current) {
 				const path = await onKeyDownRef.current(e);
 				if (path) {
+					abortControllerRef.current?.abort();
+					abortControllerRef.current = null;
 					goToPath(path)
 				};
 			}

@@ -1,3 +1,4 @@
+
 import { formatStream } from './streamController';
 import { Provider } from '../types/Provider';
 import { Message } from 'react-chatbotify';
@@ -8,7 +9,10 @@ import { Message } from 'react-chatbotify';
  * @param stream text stream to speak
  * @param speakAudio utility function for speaking
  */
-const speakAndForward = async function* (stream: AsyncGenerator<string>, speakAudio: (text: string) => void) {
+const speakAndForward = async function* (
+	stream: AsyncGenerator<string>,
+	speakAudio: (text: string) => void
+) {
 	for await (const chunk of stream) {
 		speakAudio(chunk);
 		yield chunk;
@@ -21,6 +25,7 @@ const speakAndForward = async function* (stream: AsyncGenerator<string>, speakAu
  * @param messages messages to send to the LLM
  * @param refs object containing relevant refs
  * @param actions object containing relevant actions
+ * @param opts optional AbortSignal
  */
 const handlePrompt = async (
 	messages: Message[],
@@ -43,7 +48,8 @@ const handlePrompt = async (
 		toggleIsBotTyping: (active?: boolean) => void;
 		focusTextArea: () => void;
 		goToPath: (path: string) => void;
-	}
+	},
+	opts: {signal?: AbortSignal} = {}
 ): Promise<void> => {
 	if (!refs.providerRef.current) {
 		return;
@@ -68,23 +74,28 @@ const handlePrompt = async (
 	if (outputType === 'full') {
 		let outputContent = '';
 		for await (const part of rawStream) {
+			if (opts.signal?.aborted) break;
 			outputContent += part;
 		}
 
-		// once response is sent, disable bot typing and focus on text area again
 		toggleIsBotTyping(false);
 		injectMessage(outputContent);
 		setTimeout(() => {
 			toggleTextAreaDisabled(false);
 			focusTextArea();
 		});
-	// else use 'streamMessage' instead
-	// manually apply speak audio before streaming as core library does not support audio for `streamMessage`
 	} else {
-		const formattedStream = formatStream(speakAndForward(rawStream, speakAudio), outputType, outputSpeed);
+		const formattedStream = formatStream(
+			speakAndForward(rawStream, speakAudio),
+			outputType,
+			outputSpeed
+		);
 		let outputContent = '';
 		let hasResponded = false;
 		for await (const part of formattedStream) {
+			if (opts.signal?.aborted) {
+				break;
+			}
 			if (!hasResponded) {
 				// once response starts streaming in, disable bot typing
 				toggleIsBotTyping(false);
