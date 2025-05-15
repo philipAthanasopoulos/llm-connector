@@ -34,6 +34,7 @@ const useMessageHandler = (
 	actions: {
 		speakAudio: (text: string) => void;
 		injectMessage: (content: string | JSX.Element, sender?: string) => Promise<Message | null>;
+		simulateStreamMessage: (content: string, sender?: string) => Promise<Message | null>;
 		streamMessage: (msg: string) => void;
 		endStreamMessage: () => void;
 		toggleTextAreaDisabled: (active?: boolean) => void;
@@ -42,8 +43,15 @@ const useMessageHandler = (
 		goToPath: (path: string) => void;
 	}
 ) => {
-	const { messagesRef, onUserMessageRef, onKeyDownRef } = refs;
-	const { injectMessage, toggleTextAreaDisabled, toggleIsBotTyping, goToPath, focusTextArea, } = actions;
+	const { messagesRef, outputTypeRef, onUserMessageRef, onKeyDownRef } = refs;
+	const {
+		injectMessage,
+		simulateStreamMessage,
+		toggleTextAreaDisabled,
+		toggleIsBotTyping,
+		goToPath,
+		focusTextArea
+	} = actions;
 
 	// controller to abort streaming responses if required
     const abortControllerRef = useRef<AbortController | null>(null);
@@ -93,7 +101,11 @@ const useMessageHandler = (
 						focusTextArea();
 					});
 					console.error('LLM prompt failed', err);
-					injectMessage(refs.errorMessageRef.current);
+					if (outputTypeRef.current === "full") {
+						injectMessage(refs.errorMessageRef.current);
+					} else {
+						simulateStreamMessage(refs.errorMessageRef.current);
+					}
 				});
 			}, STREAM_DEBOUNCE_MS);
 		},

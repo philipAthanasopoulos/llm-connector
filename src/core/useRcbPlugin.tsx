@@ -36,7 +36,7 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 	const { getBotId } = useBotId();
 	const { getFlow } = useFlow();
 	const { speakAudio } = useAudio();
-	const { messages, injectMessage, streamMessage, endStreamMessage } = useMessages();
+	const { messages, injectMessage, simulateStreamMessage, streamMessage, endStreamMessage } = useMessages();
 	const { goToPath } = usePaths();
 	const { toggleTextAreaDisabled, focusTextArea } = useTextArea();
 	const { toggleIsBotTyping } = useChatWindow();
@@ -78,6 +78,7 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 		{
 			speakAudio,
 			injectMessage,
+			simulateStreamMessage,
 			streamMessage,
 			endStreamMessage,
 			toggleTextAreaDisabled,

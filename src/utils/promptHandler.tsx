@@ -42,6 +42,7 @@ const handlePrompt = async (
 	actions: {
 		speakAudio: (text: string) => void;
 		injectMessage: (content: string | JSX.Element, sender?: string) => Promise<Message | null>;
+		simulateStreamMessage: (content: string, sender?: string) => Promise<Message | null>;
 		streamMessage: (msg: string) => void;
 		endStreamMessage: () => void;
 		toggleTextAreaDisabled: (active?: boolean) => void;
