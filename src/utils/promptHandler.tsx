@@ -1,4 +1,3 @@
-
 import { formatStream } from './streamController';
 import { Provider } from '../types/Provider';
 import { Message } from 'react-chatbotify';
@@ -9,10 +8,7 @@ import { Message } from 'react-chatbotify';
  * @param stream text stream to speak
  * @param speakAudio utility function for speaking
  */
-const speakAndForward = async function* (
-	stream: AsyncGenerator<string>,
-	speakAudio: (text: string) => void
-) {
+const speakAndForward = async function* (stream: AsyncGenerator<string>, speakAudio: (text: string) => void) {
 	for await (const chunk of stream) {
 		speakAudio(chunk);
 		yield chunk;
@@ -51,7 +47,7 @@ const handlePrompt = async (
 		focusTextArea: () => void;
 		goToPath: (path: string) => void;
 	},
-	opts: {signal?: AbortSignal} = {}
+	opts: { signal?: AbortSignal } = {}
 ): Promise<void> => {
 	if (!refs.providerRef.current) {
 		return;
@@ -64,7 +60,7 @@ const handlePrompt = async (
 		focusTextArea,
 		injectMessage,
 		streamMessage,
-		endStreamMessage
+		endStreamMessage,
 	} = actions;
 
 	const rawStream = refs.providerRef.current.sendMessages(messages);
@@ -87,11 +83,7 @@ const handlePrompt = async (
 			focusTextArea();
 		});
 	} else {
-		const formattedStream = formatStream(
-			speakAndForward(rawStream, speakAudio),
-			outputType,
-			outputSpeed
-		);
+		const formattedStream = formatStream(speakAndForward(rawStream, speakAudio), outputType, outputSpeed);
 		let outputContent = '';
 		let hasResponded = false;
 		for await (const part of formattedStream) {

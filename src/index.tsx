@@ -13,19 +13,10 @@ import { PluginConfig } from './types/PluginConfig';
 import { Provider } from './types/Provider';
 
 // default provider exports
-export {
-    GeminiProvider,
-    OpenaiProvider,
-    WebLlmProvider,
-    WllamaProvider,
-}
+export { GeminiProvider, OpenaiProvider, WebLlmProvider, WllamaProvider };
 
 // type exports
-export type {
-    LlmConnectorBlock,
-    PluginConfig,
-    Provider
-};
+export type { LlmConnectorBlock, PluginConfig, Provider };
 
 // plugin export
 export default LlmConnector;

@@ -20,10 +20,7 @@ const App = () => {
 	];
 
 	const onUserMessageCheck = async (message: Message) => {
-		if (
-			typeof message.content === 'string' &&
-			message.content.toUpperCase() === 'RESTART'
-		) {
+		if (typeof message.content === 'string' && message.content.toUpperCase() === 'RESTART') {
 			return 'start';
 		}
 	};
@@ -33,7 +30,7 @@ const App = () => {
 			return 'start';
 		}
 		return null;
-	}
+	};
 
 	// example flow for testing
 	const flow: Flow = {
@@ -52,16 +49,23 @@ const App = () => {
 					await params.simulateStreamMessage(
 						`You selected ${params.userInput}. This model runs in your browser, so responses may be slower and less accurate.`
 					);
-				// if gemini/openai chosen, check for presence of api keys since examples are running in 'direct' mode
+					// if gemini/openai chosen, check for presence of api keys since examples are running in 'direct' mode
 				} else {
-					if ((params.userInput === "Gemini" && !geminiApiKey) || (params.userInput === "OpenAI" && !openaiApiKey)) {
-						await params.simulateStreamMessage(`You selected ${params.userInput} in 'direct' mode but no API key was set!`);
-						return "start";
+					if (
+						(params.userInput === 'Gemini' && !geminiApiKey) ||
+						(params.userInput === 'OpenAI' && !openaiApiKey)
+					) {
+						await params.simulateStreamMessage(
+							`You selected ${params.userInput} in 'direct' mode but no API key was set!`
+						);
+						return 'start';
 					} else {
 						await params.simulateStreamMessage(`You selected ${params.userInput}, ask away!`);
 					}
 				}
-				await params.simulateStreamMessage("You may type 'RESTART' or hit the 'ESC' key to select another model.")
+				await params.simulateStreamMessage(
+					"You may type 'RESTART' or hit the 'ESC' key to select another model."
+				);
 				return params.userInput.toLowerCase();
 			},
 		} as LlmConnectorBlock,
@@ -80,7 +84,8 @@ const App = () => {
 		wllama: {
 			llmConnector: {
 				provider: new WllamaProvider({
-					modelUrl: 'https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct-GGUF/resolve/main/smollm2-360m-instruct-q8_0.gguf',
+					modelUrl:
+						'https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct-GGUF/resolve/main/smollm2-360m-instruct-q8_0.gguf',
 					loadModelConfig: {
 						n_ctx: 8192,
 					},
@@ -124,13 +129,7 @@ const App = () => {
 		} as LlmConnectorBlock,
 	};
 
-	return (
-		<ChatBot
-			id="chatbot-id"
-			plugins={plugins}
-			flow={flow}
-		></ChatBot>
-	);
+	return <ChatBot id="chatbot-id" plugins={plugins} flow={flow}></ChatBot>;
 };
 
 export default App;

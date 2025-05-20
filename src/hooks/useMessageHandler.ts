@@ -4,6 +4,8 @@ import {
 	RcbStopStreamMessageEvent,
 	RcbStopSimulateStreamMessageEvent,
 	Message,
+	useOnRcbEvent,
+	RcbEvent,
 } from 'react-chatbotify';
 import { handlePrompt } from '../utils/promptHandler';
 import { Provider } from '../types/Provider';
@@ -15,12 +17,10 @@ const STREAM_DEBOUNCE_MS = 500;
 /**
  * Handles message events.
  *
- * @param getBotId id of the chatbot
  * @param refs object containing relevant refs
  * @param actions object containing relevant actions
  */
 const useMessageHandler = (
-	getBotId: () => string | null,
 	refs: {
 		providerRef: React.MutableRefObject<Provider | null>;
 		messagesRef: React.MutableRefObject<Message[]>;
@@ -45,17 +45,11 @@ const useMessageHandler = (
 	}
 ) => {
 	const { messagesRef, outputTypeRef, onUserMessageRef, onKeyDownRef, errorMessageRef } = refs;
-	const {
-		injectMessage,
-		simulateStreamMessage,
-		toggleTextAreaDisabled,
-		toggleIsBotTyping,
-		goToPath,
-		focusTextArea
-	} = actions;
+	const { injectMessage, simulateStreamMessage, toggleTextAreaDisabled, toggleIsBotTyping, goToPath, focusTextArea } =
+		actions;
 
 	// controller to abort streaming responses if required
-    const abortControllerRef = useRef<AbortController | null>(null);
+	const abortControllerRef = useRef<AbortController | null>(null);
 
 	/**
 	 * Handles message events to determine whether to prompt LLM.
@@ -64,7 +58,7 @@ const useMessageHandler = (
 	 */
 	const handler = useCallback(
 		(event: RcbPostInjectMessageEvent | RcbStopStreamMessageEvent | RcbStopSimulateStreamMessageEvent) => {
-			if (getBotId() !== event.detail.botId || !refs.providerRef.current) {
+			if (!refs.providerRef.current) {
 				return;
 			}
 			const msg = event.data.message!;
@@ -90,10 +84,10 @@ const useMessageHandler = (
 				const historySize = refs.historySizeRef.current;
 				const past = messagesRef.current;
 				const messagesToSend = historySize ? [...past.slice(-(historySize - 1)), msg] : [msg];
-				
+
 				// create & stash a new controller
-                const ctrl = new AbortController();
-                abortControllerRef.current = ctrl;
+				const ctrl = new AbortController();
+				abortControllerRef.current = ctrl;
 
 				handlePrompt(messagesToSend, refs, actions, { signal: ctrl.signal }).catch((err) => {
 					toggleIsBotTyping(false);
@@ -102,7 +96,7 @@ const useMessageHandler = (
 						focusTextArea();
 					});
 					console.error('LLM prompt failed', err);
-					if (outputTypeRef.current === "full") {
+					if (outputTypeRef.current === 'full') {
 						injectMessage(errorMessageRef.current);
 					} else {
 						simulateStreamMessage(errorMessageRef.current);
@@ -110,20 +104,13 @@ const useMessageHandler = (
 				});
 			}, STREAM_DEBOUNCE_MS);
 		},
-		[getBotId, refs, actions]
+		[refs, actions]
 	);
 
 	// adds required events for message streaming
-	useEffect(() => {
-		window.addEventListener('rcb-post-inject-message', handler);
-		window.addEventListener('rcb-stop-simulate-stream-message', handler);
-		window.addEventListener('rcb-stop-stream-message', handler);
-		return () => {
-			window.removeEventListener('rcb-post-inject-message', handler);
-			window.removeEventListener('rcb-stop-simulate-stream-message', handler);
-			window.removeEventListener('rcb-stop-stream-message', handler);
-		};
-	}, [handler]);
+	useOnRcbEvent(RcbEvent.POST_INJECT_MESSAGE, handler);
+	useOnRcbEvent(RcbEvent.STOP_SIMULATE_STREAM_MESSAGE, handler);
+	useOnRcbEvent(RcbEvent.STOP_STREAM_MESSAGE, handler);
 
 	// handles keydown event for stop condition
 	useEffect(() => {
@@ -133,8 +120,8 @@ const useMessageHandler = (
 				if (path) {
 					abortControllerRef.current?.abort();
 					abortControllerRef.current = null;
-					goToPath(path)
-				};
+					goToPath(path);
+				}
 			}
 		};
 		window.addEventListener('keydown', onKey);

@@ -1,7 +1,7 @@
 /**
  * Converts a stream that yields strings in chunks into a stream yielding one character at a time
  * based on given output speed.
- * 
+ *
  * @param stream raw async iterable stream of strings.
  * @param outputSpeed speed in milliseconds to stream response
  */
@@ -19,14 +19,11 @@ const streamToCharacters = async function* (
 
 /**
  * Yields string in chunks based on given output speed.
- * 
+ *
  * @param stream raw async iterable stream of strings.
  * @param outputSpeed speed in milliseconds to stream response
  */
-const streamToChunk = async function* (
-	stream: AsyncGenerator<string>,
-	outputSpeed: number
-): AsyncGenerator<string> {
+const streamToChunk = async function* (stream: AsyncGenerator<string>, outputSpeed: number): AsyncGenerator<string> {
 	for await (const chunk of stream) {
 		yield chunk;
 		await new Promise((resolve) => setTimeout(resolve, outputSpeed));

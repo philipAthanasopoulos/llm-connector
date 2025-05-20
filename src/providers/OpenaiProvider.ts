@@ -42,7 +42,7 @@ class OpenaiProvider implements Provider {
 			this.headers = { ...this.headers, Authorization: `Bearer ${config.apiKey}` };
 			return;
 		}
-		
+
 		if (config.mode !== 'proxy') {
 			throw Error("Invalid mode specified for OpenAI provider ('direct' or 'proxy').");
 		}

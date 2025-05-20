@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import {
-	useBotId,
 	useFlow,
 	Plugin,
 	useAudio,
@@ -29,12 +28,11 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 	const outputTypeRef = useRef<'character' | 'chunk' | 'full'>('chunk');
 	const outputSpeedRef = useRef<number>(30);
 	const historySizeRef = useRef<number>(0);
-	const initialMessageRef = useRef<string>("");
+	const initialMessageRef = useRef<string>('');
 	const errorMessageRef = useRef<string>('Unable to get response, please try again.');
 	const onUserMessageRef = useRef<((msg: Message) => Promise<string | null>) | null>(null);
 	const onKeyDownRef = useRef<((e: KeyboardEvent) => Promise<string | null>) | null>(null);
 
-	const { getBotId } = useBotId();
 	const { getFlow } = useFlow();
 	const { speakAudio } = useAudio();
 	const { messages, injectMessage, simulateStreamMessage, streamMessage, endStreamMessage } = useMessages();
@@ -50,12 +48,12 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 	}, [messages]);
 
 	// handles changing of conversation path (block)
-	useChangePath(getBotId, getFlow, (block) => {
+	useChangePath(getFlow, (block) => {
 		providerRef.current = block.llmConnector?.provider ?? null;
 		outputTypeRef.current = block.llmConnector?.outputType ?? 'chunk';
 		outputSpeedRef.current = block.llmConnector?.outputSpeed ?? 30;
 		historySizeRef.current = block.llmConnector?.historySize ?? 0;
-		initialMessageRef.current = block.llmConnector?.initialMessage ?? "";
+		initialMessageRef.current = block.llmConnector?.initialMessage ?? '';
 		errorMessageRef.current = block.llmConnector?.errorMessage ?? 'Unable to get response, please try again.';
 		onUserMessageRef.current = block.llmConnector?.stopConditions?.onUserMessage ?? null;
 		onKeyDownRef.current = block.llmConnector?.stopConditions?.onKeyDown ?? null;
@@ -86,10 +84,10 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 	};
 
 	// handles pre-processing and post-processing of blocks.
-	useProcessBlock(getBotId, refs, actions);
+	useProcessBlock(refs, actions);
 
 	// handles message events
-	useMessageHandler(getBotId, refs, actions);
+	useMessageHandler(refs, actions);
 
 	// initializes plugin metadata with plugin name
 	const pluginMetaData: ReturnType<Plugin> = { name: '@rcb-plugins/llm-connector' };
