@@ -27,7 +27,7 @@
   <img height="400px" src="https://github.com/user-attachments/assets/c78f88f9-bbb7-4bad-91a8-13633ce35d4a" />
 </p>
 
-**LLM Connector** is a plugin that provides out-of-the-box integrations with large language models (LLMs). The plugin ships with built-in support for 4 default LLM providers which are [**OpenAI**](docs/providers/OpenAI),[**Gemini**](/docs/providers//Gemini), [**WebLlm (in-browser)**](/docs/providers/WebLlm) and [**Wllama (in-browser)**](docs/providers/Wllama). Developers may also create their own providers beyond those that are provided to support niche or custom use cases. The plugin also provides generalized configurations for managing streaming behavior, chat history inclusion and audio output, greatly simplifying the amount of custom logic required from developers.
+**LLM Connector** is a plugin that provides out-of-the-box integrations with large language models (LLMs). The plugin ships with built-in support for 4 default LLM providers which are [**OpenAI**](docs/providers/OpenAI.md), [**Gemini**](/docs/providers/Gemini.md), [**WebLlm (in-browser)**](/docs/providers/WebLlm.md) and [**Wllama (in-browser)**](docs/providers/Wllama.md). Developers may also create their own providers beyond those that are provided to support niche or custom use cases. The plugin also provides generalized configurations for managing streaming behavior, chat history inclusion and audio output, greatly simplifying the amount of custom logic required from developers.
 
 For support, join the plugin community on [**Discord**](https://discord.gg/J6pA4v3AMW) to connect with other developers and get help.
 
@@ -57,7 +57,7 @@ The plugin is incredibly straightforward to use and is [**available on npm**](ht
    };
    ```
 
-4. Define an `llmConnector` attribute within the [**Block**](https://react-chatbotify.com/docs/concepts/conversations#block) that requires LLM integration. Import your desired LLM provider (or create your own!) and pass it as a value to the `provider` within the `llmConnector` attribute. You may refer to the setup below which uses the [**WebLlmProvider**](/docs/providers/WebLlm) for a better idea (details covered later): 
+4. Define an `llmConnector` attribute within the [**Block**](https://react-chatbotify.com/docs/concepts/conversations#block) that requires LLM integration. Import your desired LLM provider (or create your own!) and pass it as a value to the `provider` within the `llmConnector` attribute. You may refer to the setup below which uses the [**WebLlmProvider**](/docs/providers/WebLlm.md) for a better idea (details covered later): 
    ```javascript
    import ChatBot from "react-chatbotify";
    import LlmConnector, { LlmConnectorBlock, WebLlmProvider } from "@rcb-plugins/llm-connector";
@@ -152,10 +152,10 @@ The `llmConnector` attribute is added to the Block that you are keen to integrat
 
 As you may have seen from earlier examples, providers are passed into the `provider` property within the `llmConnector` attribute. Providers are essentially an abstraction over the various LLM providers such as OpenAI and Gemini. With that said, configurations for providers can vary greatly depending on the choice of provider. For the default providers, their configuration guides can be found here:
 
-- [**OpenAIProvider Configurations**](/docs/providers//OpenAI)
-- [**GeminiProvider Configurations**](/docs/providers/Gemini)
-- [**WebLlmProvider Configurations**](/docs/providers/WebLlm)
-- [**WllamaProvider Configurations**](/docs/providers/Wllama)
+- [**OpenAIProvider Configurations**](/docs/providers/OpenAI.md)
+- [**GeminiProvider Configurations**](/docs/providers/Gemini.md)
+- [**WebLlmProvider Configurations**](/docs/providers/WebLlm.md)
+- [**WllamaProvider Configurations**](/docs/providers/Wllama.md)
 
 > [!TIP]  
 > Note that if your choice of provider falls outside the default ones provided but has API specifications aligned to default providers (e.g. OpenAI), you may still use the default providers. 
