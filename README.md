@@ -67,14 +67,14 @@ The plugin is incredibly straightforward to use and is [**available on npm**](ht
        start: {
          message: "What would you like to find out today?",
          transition: 0,
-	       path: "llm_example_block",
+         path: "llm_example_block",
        },
        llm_example_block: {
          llmConnector: {
-   	       provider: new WebLlmProvider({
-	           model: 'Qwen2-0.5B-Instruct-q4f16_1-MLC',
-	         }),
-	       }
+            provider: new WebLlmProvider({
+             model: 'Qwen2-0.5B-Instruct-q4f16_1-MLC',
+           }),
+         }
        } as LlmConnectorBlock,
        // ... other blocks as necessary
      }
@@ -194,7 +194,7 @@ Within the `llmConnector` attribute, there is a `stopConditions` property that a
 
 ```javascript
 import ChatBot from "react-chatbotify";
-import llmConnector, { LlmConnectorBlock, BrowserProvider } from "@rcb-plugins/llm-connector";
+import LlmConnector, { LlmConnectorBlock, OpenaiProvider } from "@rcb-plugins/llm-connector";
 
 const MyComponent = () => {
   const flow = {
@@ -206,10 +206,10 @@ const MyComponent = () => {
     llm_example_block: {
       llmConnector: {
         provider: new OpenaiProvider({
-	        mode: 'direct',
-	        model: 'gpt-4.1-nano',
-	        responseFormat: 'stream',
-	        apiKey: // openai api key here,
+          mode: 'direct',
+          model: 'gpt-4.1-nano',
+          responseFormat: 'stream',
+          apiKey: // openai api key here,
         }),
         stopConditions: {
           onUserMessage: (message: Message) => {
@@ -221,11 +221,11 @@ const MyComponent = () => {
             }
           },
           onKeyDown: (event: KeyboardEvent) => {
-						if (event.key === 'Escape') {
-							return 'start';
-						}
-						return null;
-					},
+            if (event.key === 'Escape') {
+              return 'start';
+            }
+            return null;
+          },
         },
       },
     } as LlmConnectorBlock,
@@ -239,7 +239,7 @@ const MyComponent = () => {
   };
 
   return (
-    <ChatBot plugins={[llmConnectorProvider()]}/>
+    <ChatBot plugins={[LlmConnector()]}/>
   )
 }
 ```
