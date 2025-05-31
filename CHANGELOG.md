@@ -1,3 +1,11 @@
+## v0.3.0 (01-06-2025)
+
+**Fixed:**
+- Fixed an issue where the @wllama/wllama package was causing issues for some users
+
+**Note:**
+WllamaProvider is no longer shipped by default with the plugin, primarily because packaging it into the plugin causes issues that are hard to resolve plugin-side. There's also a lack of practical use case for it currently, though the default implementation is still available for users to copy into their project [**here**](https://gist.github.com/tjtanjin/345fe484c6df26c8194381d2b177f66c).
+
 ## v0.2.0 (16-05-2025)
 
 **Fixed:**
