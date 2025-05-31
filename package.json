@@ -12,14 +12,13 @@
     "gemini",
     "openai",
     "webllm",
-    "wllama",
     "react-chatbotify",
     "react-chatbotify-plugin"
   ],
   "files": [
     "./dist"
   ],
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A generic LLM connector for integrating Large Language Models (LLMs) in React ChatBotify!",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -50,11 +49,10 @@
     "url": "https://github.com/React-ChatBotify-Plugins/llm-connector"
   },
   "peerDependencies": {
-    "react": ">=16.14.0",
-    "react-dom": ">=16.14.0",
-    "react-chatbotify": "^2.0.0-beta.37",
     "@mlc-ai/web-llm": "^0.2.78",
-    "@wllama/wllama": "^2.3.1"
+    "react": ">=16.14.0",
+    "react-chatbotify": "^2.0.0-beta.37",
+    "react-dom": ">=16.14.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",

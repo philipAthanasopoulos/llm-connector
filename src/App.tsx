@@ -3,7 +3,6 @@ import ChatBot, { Flow, Message, Params } from 'react-chatbotify';
 import RcbPlugin from './factory/RcbPluginFactory';
 import { LlmConnectorBlock } from './types/LlmConnectorBlock';
 import GeminiProvider from './providers/GeminiProvider';
-import WllamaProvider from './providers/WllamaProvider';
 import OpenaiProvider from './providers/OpenaiProvider';
 import WebLlmProvider from './providers/WebLlmProvider';
 
@@ -41,11 +40,11 @@ const App = () => {
 				}
 				return 'Pick another model to try!';
 			},
-			options: ['WebLlm', 'Wllama', 'Gemini', 'OpenAI'],
+			options: ['WebLlm', 'Gemini', 'OpenAI'],
 			chatDisabled: true,
 			path: async (params: Params) => {
 				// if browser model chosen, give a gentle warning about performance
-				if (params.userInput === 'WebLlm' || params.userInput === 'Wllama') {
+				if (params.userInput === 'WebLlm') {
 					await params.simulateStreamMessage(
 						`You selected ${params.userInput}. This model runs in your browser, so responses may be slower and less accurate.`
 					);
@@ -73,22 +72,6 @@ const App = () => {
 			llmConnector: {
 				provider: new WebLlmProvider({
 					model: 'Qwen2-0.5B-Instruct-q4f16_1-MLC',
-				}),
-				outputType: 'character',
-				stopConditions: {
-					onUserMessage: onUserMessageCheck,
-					onKeyDown: onKeyDownCheck,
-				},
-			},
-		} as LlmConnectorBlock,
-		wllama: {
-			llmConnector: {
-				provider: new WllamaProvider({
-					modelUrl:
-						'https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct-GGUF/resolve/main/smollm2-360m-instruct-q8_0.gguf',
-					loadModelConfig: {
-						n_ctx: 8192,
-					},
 				}),
 				outputType: 'character',
 				stopConditions: {

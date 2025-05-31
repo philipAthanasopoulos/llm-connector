@@ -27,7 +27,7 @@
   <img height="400px" src="https://github.com/user-attachments/assets/c78f88f9-bbb7-4bad-91a8-13633ce35d4a" />
 </p>
 
-**LLM Connector** is a plugin that provides out-of-the-box integrations with large language models (LLMs). The plugin ships with built-in support for 4 default LLM providers which are [**OpenAI**](docs/providers/OpenAI.md), [**Gemini**](/docs/providers/Gemini.md), [**WebLlm (in-browser)**](/docs/providers/WebLlm.md) and [**Wllama (in-browser)**](docs/providers/Wllama.md). Developers may also create their own providers beyond those that are provided to support niche or custom use cases. The plugin also provides generalized configurations for managing streaming behavior, chat history inclusion and audio output, greatly simplifying the amount of custom logic required from developers.
+**LLM Connector** is a plugin that provides out-of-the-box integrations with large language models (LLMs). The plugin ships with built-in support for 3 default LLM providers which are [**OpenAI**](docs/providers/OpenAI.md), [**Gemini**](/docs/providers/Gemini.md) and [**WebLlm (in-browser)**](/docs/providers/WebLlm.md). Developers may also create their own providers beyond those that are provided to support niche or custom use cases. The plugin also provides generalized configurations for managing streaming behavior, chat history inclusion and audio output, greatly simplifying the amount of custom logic required from developers.
 
 For support, join the plugin community on [**Discord**](https://discord.gg/J6pA4v3AMW) to connect with other developers and get help.
 
@@ -95,7 +95,7 @@ The quickstart above shows how LLM integrations can be done within the `llm_exam
 - Configure size of message history to include
 - Configure default error messages if responses fail
 - Synchronized audio output (relies on core library audio configurations to read out LLM responses)
-- Built-in common providers for easy integrations (OpenAI, Gemini, WebLlm & Wllama)
+- Built-in common providers for easy integrations (OpenAI, Gemini & WebLlm)
 - Ease of building your own providers for niche or custom use cases
 
 ### API Documentation
@@ -155,7 +155,6 @@ As you may have seen from earlier examples, providers are passed into the `provi
 - [**OpenAIProvider Configurations**](/docs/providers/OpenAI.md)
 - [**GeminiProvider Configurations**](/docs/providers/Gemini.md)
 - [**WebLlmProvider Configurations**](/docs/providers/WebLlm.md)
-- [**WllamaProvider Configurations**](/docs/providers/Wllama.md)
 
 > [!TIP]  
 > Note that if your choice of provider falls outside the default ones provided but has API specifications aligned to default providers (e.g. OpenAI), you may still use the default providers. 
@@ -164,7 +163,7 @@ In addition, React ChatBotify's documentation website also contains live example
 
 - [**OpenAI Provider Live Example**](https://react-chatbotify.com/docs/examples/openai_integration)
 - [**Gemini Provider Live Example**](https://react-chatbotify.com/docs/examples/gemini_integration)
-- [**Browser Providers (WebLlm & Wllama) Live Example**](https://react-chatbotify.com/docs/examples/llm_conversation)
+- [**WebLlm Live Example**](https://react-chatbotify.com/docs/examples/llm_conversation)
 
 Developers may also write custom providers to integrate with their own solutions by importing and implementing the `Provider` interface. The only method enforced by the interface is `sendMessage`, which returns an `AsyncGenerator<string>` for the `LlmConnector` plugin to consume. A minimal example of a custom provider is shown below:
 

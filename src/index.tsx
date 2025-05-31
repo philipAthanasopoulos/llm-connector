@@ -5,7 +5,6 @@ import LlmConnector from './factory/RcbPluginFactory';
 import GeminiProvider from './providers/GeminiProvider';
 import OpenaiProvider from './providers/OpenaiProvider';
 import WebLlmProvider from './providers/WebLlmProvider';
-import WllamaProvider from './providers/WllamaProvider';
 
 // type imports
 import { LlmConnectorBlock } from './types/LlmConnectorBlock';
@@ -13,7 +12,7 @@ import { PluginConfig } from './types/PluginConfig';
 import { Provider } from './types/Provider';
 
 // default provider exports
-export { GeminiProvider, OpenaiProvider, WebLlmProvider, WllamaProvider };
+export { GeminiProvider, OpenaiProvider, WebLlmProvider };
 
 // type exports
 export type { LlmConnectorBlock, PluginConfig, Provider };

@@ -21,9 +21,6 @@ export default ({ mode }) => {
         'Cross-Origin-Embedder-Policy': 'require-corp',
       },
     },
-    optimizeDeps: {
-      exclude: ['@wllama/wllama'],
-    },
     build: {
       lib: {
         entry: path.resolve(__dirname, "src/index.tsx"),
@@ -40,7 +37,6 @@ export default ({ mode }) => {
           "react/jsx-dev-runtime",
           "react-chatbotify",
           "@mlc-ai/web-llm",
-          "@wllama/wllama"
         ],
         output: {
           globals: {

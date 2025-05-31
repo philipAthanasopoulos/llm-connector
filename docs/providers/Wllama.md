@@ -1,3 +1,6 @@
+> [!WARNING]  
+> The WllamaProvider is **no longer shipped by default** with the plugin. If you wish, you may refer to the legacy WllamaProvider implementation [**here**](https://gist.github.com/tjtanjin/345fe484c6df26c8194381d2b177f66c) and copy it into your codebase, then reference the configuration guide below.
+
 # WllamaProvider Configuration Guide
 
 The `WllamaProvider` runs LLM models in the browser using the Wllama WebAssembly runtime. It exposes the Wllama [**AssetsPathConfig**](https://github.ngxson.com/wllama/docs/interfaces/AssetsPathConfig.html), [**WllamaConfig**](https://github.ngxson.com/wllama/docs/interfaces/WllamaConfig.html), [**LoadModelConfig**](https://github.ngxson.com/wllama/docs/interfaces/LoadModelConfig.html) and [**ChatCompletionOptions**](https://github.ngxson.com/wllama/docs/interfaces/ChatCompletionOptions.html).
