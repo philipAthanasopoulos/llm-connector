@@ -15,6 +15,7 @@ type DirectConfig = {
 	headers?: Record<string, string>;
 	body?: Record<string, string>;
 	messageParser?: (messages: Message[]) => OpenaiProviderMessage[];
+	debug?: boolean;
 };
 
 /**
@@ -30,6 +31,7 @@ type ProxyConfig = {
 	headers?: Record<string, string>;
 	body?: Record<string, string>;
 	messageParser?: (messages: Message[]) => OpenaiProviderMessage[];
+	debug?: boolean;
 };
 
 /**

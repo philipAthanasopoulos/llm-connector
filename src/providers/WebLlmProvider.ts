@@ -15,6 +15,7 @@ class WebLlmProvider implements Provider {
 	private chatCompletionOptions: Record<string, unknown>;
 	private messageParser?: (messages: Message[]) => WebLlmProviderMessage[];
 	private engine?: MLCEngine;
+	private debug: boolean = false;
 
 	/**
 	 * Sets default values for the provider based on given configuration. Configuration guide here:
@@ -29,6 +30,7 @@ class WebLlmProvider implements Provider {
 		this.messageParser = config.messageParser;
 		this.engineConfig = config.engineConfig ?? {};
 		this.chatCompletionOptions = config.chatCompletionOptions ?? {};
+		this.debug = config.debug ?? false;
 		this.createEngine();
 	}
 
@@ -50,6 +52,17 @@ class WebLlmProvider implements Provider {
 	public async *sendMessages(messages: Message[]): AsyncGenerator<string> {
 		if (!this.engine) {
 			await this.createEngine();
+		}
+
+		if (this.debug) {
+			console.log('[WebLlmProvider] Request:', {
+				model: this.model,
+				systemMessage: this.systemMessage,
+				responseFormat: this.responseFormat,
+				engineConfig: this.engineConfig,
+				chatCompletionOptions: this.chatCompletionOptions,
+				messages: this.constructBodyWithMessages(messages).messages, // Log messages being sent
+			});
 		}
 
 		const result = await this.engine?.chat.completions.create(this.constructBodyWithMessages(messages));
