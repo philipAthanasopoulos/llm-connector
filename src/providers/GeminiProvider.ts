@@ -14,6 +14,7 @@ class GeminiProvider implements Provider {
 	private systemMessage?: string;
 	private responseFormat!: 'stream' | 'json';
 	private messageParser?: (messages: Message[]) => GeminiProviderMessage[];
+	private debug: boolean = false;
 
 	/**
 	 * Sets default values for the provider based on given configuration. Configuration guide here:
@@ -27,6 +28,7 @@ class GeminiProvider implements Provider {
 		this.systemMessage = config.systemMessage;
 		this.responseFormat = config.responseFormat ?? 'stream';
 		this.messageParser = config.messageParser;
+		this.debug = config.debug ?? false;
 		this.headers = {
 			'Content-Type': 'application/json',
 			Accept: this.responseFormat === 'stream' ? 'text/event-stream' : 'application/json',
@@ -52,6 +54,20 @@ class GeminiProvider implements Provider {
 	 * @param messages messages to include in the request
 	 */
 	public async *sendMessages(messages: Message[]): AsyncGenerator<string> {
+		if (this.debug) {
+			const sanitizedEndpoint = this.endpoint.replace(/\?key=([^&]+)/, '?key=[REDACTED]');
+			// Headers in Gemini usually don't contain sensitive info like 'Authorization'
+			// as the API key is in the URL, but we'll keep a general sanitization pattern.
+			const sanitizedHeaders = { ...this.headers };
+			// If any sensitive header were to be added in the future, it should be removed here.
+			// delete sanitizedHeaders['Some-Sensitive-Header'];
+			console.log('[GeminiProvider] Request:', {
+				method: this.method,
+				endpoint: sanitizedEndpoint,
+				headers: sanitizedHeaders,
+				body: this.constructBodyWithMessages(messages),
+			});
+		}
 		const res = await fetch(this.endpoint, {
 			method: this.method,
 			headers: this.headers as HeadersInit,

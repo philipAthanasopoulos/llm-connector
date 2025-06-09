@@ -12,6 +12,7 @@ type WebLlmProviderConfig = {
 	engineConfig?: MLCEngineConfig;
 	chatCompletionOptions?: Record<string, unknown>;
 	messageParser?: (messages: Message[]) => WebLlmProviderMessage[];
+	debug?: boolean;
 };
 
 export type { WebLlmProviderConfig };

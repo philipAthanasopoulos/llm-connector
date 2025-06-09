@@ -14,6 +14,7 @@ class OpenaiProvider implements Provider {
 	private systemMessage?: string;
 	private responseFormat!: 'stream' | 'json';
 	private messageParser?: (messages: Message[]) => OpenaiProviderMessage[];
+	private debug: boolean = false;
 
 	/**
 	 * Sets default values for the provider based on given configuration. Configuration guide here:
@@ -27,6 +28,7 @@ class OpenaiProvider implements Provider {
 		this.systemMessage = config.systemMessage;
 		this.responseFormat = config.responseFormat ?? 'stream';
 		this.messageParser = config.messageParser;
+		this.debug = config.debug ?? false;
 		this.headers = {
 			'Content-Type': 'application/json',
 			Accept: this.responseFormat === 'stream' ? 'text/event-stream' : 'application/json',
@@ -54,6 +56,16 @@ class OpenaiProvider implements Provider {
 	 * @param messages messages to include in the request
 	 */
 	public async *sendMessages(messages: Message[]): AsyncGenerator<string> {
+		if (this.debug) {
+			const sanitizedHeaders = { ...this.headers };
+			delete sanitizedHeaders['Authorization'];
+			console.log('[OpenaiProvider] Request:', {
+				method: this.method,
+				endpoint: this.endpoint,
+				headers: sanitizedHeaders,
+				body: this.constructBodyWithMessages(messages),
+			});
+		}
 		const res = await fetch(this.endpoint, {
 			method: this.method,
 			headers: this.headers as HeadersInit,
