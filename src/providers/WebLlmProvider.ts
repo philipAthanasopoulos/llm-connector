@@ -66,6 +66,11 @@ class WebLlmProvider implements Provider {
 		}
 
 		const result = await this.engine?.chat.completions.create(this.constructBodyWithMessages(messages));
+
+		if (this.debug) {
+			console.log('[WebLlmProvider] Response:', result);
+		}
+
 		if (result && Symbol.asyncIterator in result) {
 			for await (const chunk of result as AsyncIterable<ChatCompletionChunk>) {
 				const delta = chunk.choices[0]?.delta?.content;

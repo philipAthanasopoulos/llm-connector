@@ -74,6 +74,10 @@ class GeminiProvider implements Provider {
 			body: JSON.stringify(this.constructBodyWithMessages(messages)),
 		});
 
+		if (this.debug) {
+			console.log('[GeminiProvider] Response status:', res.status);
+		}
+
 		if (!res.ok) {
 			throw new Error(`Gemini API error ${res.status}: ${await res.text()}`);
 		}
@@ -88,6 +92,9 @@ class GeminiProvider implements Provider {
 			}
 		} else {
 			const payload = await res.json();
+			if (this.debug) {
+				console.log('[GeminiProvider] Response body:', payload);
+			}
 			const text = payload.candidates?.[0]?.content?.parts?.[0]?.text;
 			if (typeof text === 'string') {
 				yield text;

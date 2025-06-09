@@ -72,6 +72,10 @@ class OpenaiProvider implements Provider {
 			body: JSON.stringify(this.constructBodyWithMessages(messages)),
 		});
 
+		if (this.debug) {
+			console.log('[OpenaiProvider] Response status:', res.status);
+		}
+
 		if (!res.ok) {
 			throw new Error(`Openai API error ${res.status}: ${await res.text()}`);
 		}
@@ -86,7 +90,10 @@ class OpenaiProvider implements Provider {
 			}
 		} else {
 			const payload = await res.json();
-			const text = payload.candidates?.[0]?.content?.parts?.[0]?.text;
+			if (this.debug) {
+				console.log('[OpenaiProvider] Response body:', payload);
+			}
+			const text = payload.choices?.[0]?.message?.content;
 			if (typeof text === 'string') {
 				yield text;
 			} else {
