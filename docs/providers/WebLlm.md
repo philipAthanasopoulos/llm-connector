@@ -44,6 +44,7 @@ const webllm = new WebLlmProvider({
 | `engineConfig`   | `MLCEngineConfig`                              | ❌        | `{}` | Custom engine initialization options referenced from [**MLCEngineConfig**](https://webllm.mlc.ai/docs/user/api_reference.html#mlcengineconfig).                                  |
 | `chatCompletionOptions`   | `GenerationConfig`                              | ❌        | `{}` | Custom chat completion options from referenced from [**GenerationConfig**](https://webllm.mlc.ai/docs/user/api_reference.html#generationconfig).                                  |
 | `messageParser`         | `(msgs: Message[]) => CustomMessage[]` | ❌        | `null`                                                                                                                 | Custom parser converting React ChatBotify [`Message[]`](https://react-chatbotify.com/docs/concepts/conversations#message) into desired message format for the provider.                               |
+| `debug`          | `boolean`                                      | ❌        | `false`     | Enables debug logging for the provider.                                                               |
 
 ---
 

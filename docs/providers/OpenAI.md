@@ -46,6 +46,7 @@ const openai = new OpenaiProvider({
 | `systemMessage`  | `string`                                           | ❌                     | `null`                                  | Prepends a system prompt to every conversation.                                                       |
 | `responseFormat` | `"stream"` \| `"json"`                             | ❌                     | `"stream"`                                   | Determines whether to use stream endpoint from the provider or fetch a full JSON output.                          |
 | `messageParser`         | `(msgs: Message[]) => CustomMessage[]` | ❌        | `null`                                                                                                                 | Custom parser converting React ChatBotify [`Message[]`](https://react-chatbotify.com/docs/concepts/conversations#message) into desired message format for the provider.                               |
+| `debug`          | `boolean`                                      | ❌        | `false`     | Enables debug logging for the provider.                                                               |
 
 ---
 
