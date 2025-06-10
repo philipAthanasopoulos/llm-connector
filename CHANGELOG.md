@@ -1,3 +1,11 @@
+## v0.3.1 (11-06-2025)
+
+**Fixed:**
+- Fixed an issue with OpenAI Provider not working with `responseFormat` set to `json`
+
+**Added:**
+- Added an optional `debug` property to all 3 default providers that prints more verbose logs that may help during development
+
 ## v0.3.0 (01-06-2025)
 
 **Fixed:**
