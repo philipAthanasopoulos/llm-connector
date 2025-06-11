@@ -1,5 +1,6 @@
 {
   "name": "@rcb-plugins/llm-connector",
+  "pluginLogo": "https://cdn.jsdelivr.net/gh/react-chatbotify-plugins/llm-connector@main/src/assets/logo.webp",
   "homepage": "https://github.com/React-ChatBotify-Plugins/llm-connector",
   "keywords": [
     "react",
