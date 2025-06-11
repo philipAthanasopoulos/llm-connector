@@ -38,7 +38,7 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 	const { messages, injectMessage, simulateStreamMessage, streamMessage, endStreamMessage } = useMessages();
 	const { goToPath } = usePaths();
 	const { toggleTextAreaDisabled, focusTextArea } = useTextArea();
-	const { toggleIsBotTyping } = useChatWindow();
+	const { toggleIsBotTyping, getIsChatBotVisible } = useChatWindow();
 
 	const mergedPluginConfig = { ...DefaultPluginConfig, ...(pluginConfig ?? {}) };
 
@@ -81,6 +81,7 @@ const useRcbPlugin = (pluginConfig?: PluginConfig): ReturnType<Plugin> => {
 		toggleIsBotTyping,
 		focusTextArea,
 		goToPath,
+		getIsChatBotVisible,
 	};
 
 	// handles pre-processing and post-processing of blocks.

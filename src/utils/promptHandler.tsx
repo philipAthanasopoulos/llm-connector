@@ -46,6 +46,7 @@ const handlePrompt = async (
 		toggleIsBotTyping: (active?: boolean) => void;
 		focusTextArea: () => void;
 		goToPath: (path: string) => void;
+		getIsChatBotVisible: () => boolean;
 	},
 	opts: { signal?: AbortSignal } = {}
 ): Promise<void> => {
@@ -61,6 +62,7 @@ const handlePrompt = async (
 		injectMessage,
 		streamMessage,
 		endStreamMessage,
+		getIsChatBotVisible,
 	} = actions;
 
 	const rawStream = refs.providerRef.current.sendMessages(messages);
@@ -80,7 +82,9 @@ const handlePrompt = async (
 		injectMessage(outputContent);
 		setTimeout(() => {
 			toggleTextAreaDisabled(false);
-			focusTextArea();
+			if (getIsChatBotVisible()) {
+				focusTextArea();
+			}
 		});
 	} else {
 		const formattedStream = formatStream(speakAndForward(rawStream, speakAudio), outputType, outputSpeed);
@@ -103,7 +107,9 @@ const handlePrompt = async (
 		endStreamMessage();
 		setTimeout(() => {
 			toggleTextAreaDisabled(false);
-			focusTextArea();
+			if (getIsChatBotVisible()) {
+				focusTextArea();
+			}
 		});
 	}
 };

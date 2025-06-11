@@ -31,10 +31,18 @@ const useProcessBlock = (
 		toggleIsBotTyping: (active?: boolean) => void;
 		focusTextArea: () => void;
 		goToPath: (path: string) => void;
+		getIsChatBotVisible: () => boolean;
 	}
 ) => {
 	const { outputTypeRef } = refs;
-	const { toggleTextAreaDisabled, toggleIsBotTyping, focusTextArea, injectMessage, simulateStreamMessage } = actions;
+	const {
+		toggleTextAreaDisabled,
+		toggleIsBotTyping,
+		focusTextArea,
+		injectMessage,
+		simulateStreamMessage,
+		getIsChatBotVisible,
+	} = actions;
 
 	/**
 	 * Handles blocking of pre-processing and post-processing of block for full custom control.
@@ -67,11 +75,13 @@ const useProcessBlock = (
 				toggleIsBotTyping(false);
 				toggleTextAreaDisabled(false);
 				setTimeout(() => {
-					focusTextArea();
+					if (getIsChatBotVisible()) {
+						focusTextArea();
+					}
 				});
 			}
 		},
-		[toggleIsBotTyping, toggleTextAreaDisabled, focusTextArea]
+		[toggleIsBotTyping, toggleTextAreaDisabled, focusTextArea, getIsChatBotVisible]
 	);
 
 	// adds required events for block processing

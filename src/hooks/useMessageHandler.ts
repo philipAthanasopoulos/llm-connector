@@ -42,11 +42,19 @@ const useMessageHandler = (
 		toggleIsBotTyping: (active?: boolean) => void;
 		focusTextArea: () => void;
 		goToPath: (path: string) => void;
+		getIsChatBotVisible: () => boolean;
 	}
 ) => {
 	const { messagesRef, outputTypeRef, onUserMessageRef, onKeyDownRef, errorMessageRef } = refs;
-	const { injectMessage, simulateStreamMessage, toggleTextAreaDisabled, toggleIsBotTyping, goToPath, focusTextArea } =
-		actions;
+	const {
+		injectMessage,
+		simulateStreamMessage,
+		toggleTextAreaDisabled,
+		toggleIsBotTyping,
+		goToPath,
+		focusTextArea,
+		getIsChatBotVisible,
+	} = actions;
 
 	// controller to abort streaming responses if required
 	const abortControllerRef = useRef<AbortController | null>(null);
@@ -93,7 +101,9 @@ const useMessageHandler = (
 					toggleIsBotTyping(false);
 					toggleTextAreaDisabled(false);
 					setTimeout(() => {
-						focusTextArea();
+						if (getIsChatBotVisible()) {
+							focusTextArea();
+						}
 					});
 					console.error('LLM prompt failed', err);
 					if (outputTypeRef.current === 'full') {
