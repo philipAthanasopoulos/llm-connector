@@ -1,3 +1,8 @@
+## v0.3.2 (12-06-2025)
+
+**Fixed:**
+- Fixed an issue with autofocus applying even when embedded chatbot is out of view
+
 ## v0.3.1 (11-06-2025)
 
 **Fixed:**
