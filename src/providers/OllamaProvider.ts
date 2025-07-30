@@ -177,6 +177,7 @@ class OllamaProvider implements Provider {
 				const json = line.slice('data: '.length).trim();
 				try {
 					const event = JSON.parse(json);
+					console.log(event);
 					if (event.done === true) return;
 					if (event.message && typeof event.message.content === 'string') {
 						yield event.message.content;
