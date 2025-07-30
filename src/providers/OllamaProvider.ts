@@ -24,7 +24,7 @@ class OllamaProvider implements Provider {
 	 */
 	public constructor(config: OpenaiProviderConfig) {
 		this.method = config.method ?? 'POST';
-		this.endpoint = config.baseUrl ?? 'https://api.openai.com/v1/chat/completions';
+		this.endpoint = config.baseUrl ?? 'http://localhost:11434/api/chat';
 		this.systemMessage = config.systemMessage;
 		this.responseFormat = config.responseFormat ?? 'stream';
 		this.messageParser = config.messageParser;
@@ -126,10 +126,8 @@ class OllamaProvider implements Provider {
 	private constructBodyWithMessages = (messages: Message[]) => {
 		let parsedMessages;
 		if (this.messageParser) {
-			// use parser if specified
 			parsedMessages = this.messageParser(messages);
 		} else {
-			// only handle message contents of type string and exclude chatbot system messages
 			const filteredMessages = messages.filter(
 				(message) => typeof message.content === 'string' && message.sender.toUpperCase() !== 'SYSTEM'
 			);
@@ -148,9 +146,10 @@ class OllamaProvider implements Provider {
 			parsedMessages = [{ role: 'system', content: this.systemMessage }, ...parsedMessages];
 		}
 
+		// Only include model and messages for Ollama
 		return {
+			model: this.body.model,
 			messages: parsedMessages,
-			...this.body,
 		};
 	};
 
@@ -179,8 +178,9 @@ class OllamaProvider implements Provider {
 				try {
 					const event = JSON.parse(json);
 					if (event.done === true) return;
-					const chunk = event.choices?.[0]?.delta?.content;
-					if (chunk) yield chunk;
+					if (event.message && typeof event.message.content === 'string') {
+						yield event.message.content;
+					}
 				} catch (err) {
 					console.error('Stream parse error', err);
 				}

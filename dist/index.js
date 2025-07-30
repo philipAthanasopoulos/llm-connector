@@ -55,23 +55,23 @@ const H = {
     streamMessage: d,
     endStreamMessage: l,
     getIsChatBotVisible: u
-  } = t, p = e.providerRef.current.sendMessages(i), m = e.outputTypeRef.current, f = e.outputSpeedRef.current;
-  if (m === "full") {
+  } = t, p = e.providerRef.current.sendMessages(i), f = e.outputTypeRef.current, g = e.outputSpeedRef.current;
+  if (f === "full") {
     let h = "";
-    for await (const g of p) {
+    for await (const m of p) {
       if ((M = s.signal) != null && M.aborted) break;
-      h += g;
+      h += m;
     }
     r(!1), c(h), setTimeout(() => {
       o(!1), u() && a();
     });
   } else {
-    const h = Z(ee(p, n), m, f);
-    let g = "", b = !1;
+    const h = Z(ee(p, n), f, g);
+    let m = "", b = !1;
     for await (const E of h) {
       if ((y = s.signal) != null && y.aborted)
         break;
-      b || (r(!1), b = !0), g += E, d(g);
+      b || (r(!1), b = !0), m += E, d(m);
     }
     l(), setTimeout(() => {
       o(!1), u() && a();
@@ -85,23 +85,23 @@ const H = {
     toggleIsBotTyping: l,
     goToPath: u,
     focusTextArea: p,
-    getIsChatBotVisible: m
-  } = e, f = S(null), M = O(
+    getIsChatBotVisible: f
+  } = e, g = S(null), M = O(
     (y) => {
       if (!i.providerRef.current)
         return;
-      const h = y.data.message, g = h.sender.toUpperCase();
-      h.tags = h.tags ?? [], h.tags.push(`rcb-llm-connector-plugin:${g}`), g === "USER" && (l(!0), d(!0), setTimeout(async () => {
+      const h = y.data.message, m = h.sender.toUpperCase();
+      h.tags = h.tags ?? [], h.tags.push(`rcb-llm-connector-plugin:${m}`), m === "USER" && (l(!0), d(!0), setTimeout(async () => {
         var v;
         if (n.current) {
           const R = await n.current(h);
           if (R)
-            return (v = f.current) == null || v.abort(), f.current = null, u(R);
+            return (v = g.current) == null || v.abort(), g.current = null, u(R);
         }
         const b = i.historySizeRef.current, E = t.current, x = b ? [...E.slice(-(b - 1)), h] : [h], P = new AbortController();
-        f.current = P, te(x, i, e, { signal: P.signal }).catch((R) => {
+        g.current = P, te(x, i, e, { signal: P.signal }).catch((R) => {
           l(!1), d(!1), setTimeout(() => {
-            m() && p();
+            f() && p();
           }), console.error("LLM prompt failed", R), s.current === "full" ? a(o.current) : c(o.current);
         });
       }, se));
@@ -110,16 +110,16 @@ const H = {
   );
   C(T.POST_INJECT_MESSAGE, M), C(T.STOP_SIMULATE_STREAM_MESSAGE, M), C(T.STOP_STREAM_MESSAGE, M), z(() => {
     const y = async (h) => {
-      var g;
+      var m;
       if (r.current) {
         const b = await r.current(h);
-        b && ((g = f.current) == null || g.abort(), f.current = null, u(b));
+        b && ((m = g.current) == null || m.abort(), g.current = null, u(b));
       }
     };
     return window.addEventListener("keydown", y), () => window.removeEventListener("keydown", y);
   }, []);
 }, oe = (i) => {
-  const e = S([]), t = S(null), s = S("chunk"), n = S(30), r = S(0), o = S(""), a = S("Unable to get response, please try again."), c = S(null), d = S(null), { getFlow: l } = G(), { speakAudio: u } = L(), { messages: p, injectMessage: m, simulateStreamMessage: f, streamMessage: M, endStreamMessage: y } = N(), { goToPath: h } = K(), { toggleTextAreaDisabled: g, focusTextArea: b } = J(), { toggleIsBotTyping: E, getIsChatBotVisible: x } = Y(), P = { ...H, ...i ?? {} };
+  const e = S([]), t = S(null), s = S("chunk"), n = S(30), r = S(0), o = S(""), a = S("Unable to get response, please try again."), c = S(null), d = S(null), { getFlow: l } = G(), { speakAudio: u } = L(), { messages: p, injectMessage: f, simulateStreamMessage: g, streamMessage: M, endStreamMessage: y } = N(), { goToPath: h } = K(), { toggleTextAreaDisabled: m, focusTextArea: b } = J(), { toggleIsBotTyping: E, getIsChatBotVisible: x } = Y(), P = { ...H, ...i ?? {} };
   z(() => {
     e.current = p;
   }, [p]), q(l, (w) => {
@@ -138,11 +138,11 @@ const H = {
     onKeyDownRef: d
   }, R = {
     speakAudio: u,
-    injectMessage: m,
-    simulateStreamMessage: f,
+    injectMessage: f,
+    simulateStreamMessage: g,
     streamMessage: M,
     endStreamMessage: y,
-    toggleTextAreaDisabled: g,
+    toggleTextAreaDisabled: m,
     toggleIsBotTyping: E,
     focusTextArea: b,
     goToPath: h,
@@ -198,16 +198,16 @@ class ce {
         const { value: u, done: p } = await s.read();
         if (p) break;
         r += n.decode(u, { stream: !0 });
-        const m = r.split(`
+        const f = r.split(`
 `);
-        r = m.pop();
-        for (const f of m) {
-          const M = f.trim();
+        r = f.pop();
+        for (const g of f) {
+          const M = g.trim();
           if (!M.startsWith("data: ")) continue;
           const y = M.slice(6);
           try {
-            const g = (l = (d = (c = (a = (o = JSON.parse(y).candidates) == null ? void 0 : o[0]) == null ? void 0 : a.content) == null ? void 0 : c.parts) == null ? void 0 : d[0]) == null ? void 0 : l.text;
-            g && (yield g);
+            const m = (l = (d = (c = (a = (o = JSON.parse(y).candidates) == null ? void 0 : o[0]) == null ? void 0 : a.content) == null ? void 0 : c.parts) == null ? void 0 : d[0]) == null ? void 0 : l.text;
+            m && (yield m);
           } catch (h) {
             console.error("SSE JSON parse error:", y, h);
           }
@@ -312,10 +312,10 @@ class de {
           const p = u.slice(6).trim();
           if (p === "[DONE]") return;
           try {
-            const f = (a = (o = (r = JSON.parse(p).choices) == null ? void 0 : r[0]) == null ? void 0 : o.delta) == null ? void 0 : a.content;
-            f && (yield f);
-          } catch (m) {
-            console.error("Stream parse error", m);
+            const g = (a = (o = (r = JSON.parse(p).choices) == null ? void 0 : r[0]) == null ? void 0 : o.delta) == null ? void 0 : a.content;
+            g && (yield g);
+          } catch (f) {
+            console.error("Stream parse error", f);
           }
         }
       }
@@ -476,33 +476,31 @@ class he {
           content: a
         };
       }), this.systemMessage && (s = [{ role: "system", content: this.systemMessage }, ...s]), {
-        messages: s,
-        ...this.body
+        model: this.body.model,
+        messages: s
       };
     }, this.handleStreamResponse = async function* (t) {
-      var r, o, a;
       const s = new TextDecoder("utf-8");
       let n = "";
       for (; ; ) {
-        const { value: c, done: d } = await t.read();
-        if (d) break;
-        n += s.decode(c, { stream: !0 });
-        const l = n.split(/\r?\n/);
-        n = l.pop();
-        for (const u of l) {
-          if (!u.startsWith("data: ")) continue;
-          const p = u.slice(6).trim();
+        const { value: r, done: o } = await t.read();
+        if (o) break;
+        n += s.decode(r, { stream: !0 });
+        const a = n.split(/\r?\n/);
+        n = a.pop();
+        for (const c of a) {
+          if (!c.startsWith("data: ")) continue;
+          const d = c.slice(6).trim();
           try {
-            const m = JSON.parse(p);
-            if (m.done === !0) return;
-            const f = (a = (o = (r = m.choices) == null ? void 0 : r[0]) == null ? void 0 : o.delta) == null ? void 0 : a.content;
-            f && (yield f);
-          } catch (m) {
-            console.error("Stream parse error", m);
+            const l = JSON.parse(d);
+            if (l.done === !0) return;
+            l.message && typeof l.message.content == "string" && (yield l.message.content);
+          } catch (l) {
+            console.error("Stream parse error", l);
           }
         }
       }
-    }, this.method = e.method ?? "POST", this.endpoint = e.baseUrl ?? "https://api.openai.com/v1/chat/completions", this.systemMessage = e.systemMessage, this.responseFormat = e.responseFormat ?? "stream", this.messageParser = e.messageParser, this.debug = e.debug ?? !1, this.headers = {
+    }, this.method = e.method ?? "POST", this.endpoint = e.baseUrl ?? "http://localhost:11434/api/chat", this.systemMessage = e.systemMessage, this.responseFormat = e.responseFormat ?? "stream", this.messageParser = e.messageParser, this.debug = e.debug ?? !1, this.headers = {
       "Content-Type": "application/json",
       Accept: this.responseFormat === "stream" ? "text/event-stream" : "application/json",
       ...e.headers
