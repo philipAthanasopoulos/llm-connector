@@ -41,7 +41,7 @@ const App = () => {
 				}
 				return 'Pick another model to try!';
 			},
-			options: ['WebLlm', 'Gemini', 'OpenAI'],
+			options: ['WebLlm', 'Gemini', 'OpenAI', 'Ollama'],
 			chatDisabled: true,
 			path: async (params: Params) => {
 				// if browser model chosen, give a gentle warning about performance
@@ -118,6 +118,7 @@ const App = () => {
 					mode: 'direct',
 					model: 'robot',
 					apiKey: '',
+					debug:true,
 				}),
 				outputType: 'character',
 				stopConditions: {

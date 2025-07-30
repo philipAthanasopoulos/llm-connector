@@ -18,18 +18,18 @@ const H = {
     focusTextArea: r,
     injectMessage: o,
     simulateStreamMessage: a,
-    getIsChatBotVisible: c
-  } = e, l = O(
-    (d) => {
+    getIsChatBotVisible: d
+  } = e, c = O(
+    (l) => {
       var p;
-      const u = d.data.block;
-      u.llmConnector && (d.preventDefault(), d.type === "rcb-pre-process-block" && ((p = u.llmConnector) != null && p.initialMessage && (t.current === "full" ? o(i.initialMessageRef.current) : a(i.initialMessageRef.current)), n(!1), s(!1), setTimeout(() => {
-        c() && r();
+      const u = l.data.block;
+      u.llmConnector && (l.preventDefault(), l.type === "rcb-pre-process-block" && ((p = u.llmConnector) != null && p.initialMessage && (t.current === "full" ? o(i.initialMessageRef.current) : a(i.initialMessageRef.current)), n(!1), s(!1), setTimeout(() => {
+        d() && r();
       })));
     },
-    [n, s, r, c]
+    [n, s, r, d]
   );
-  C(T.PRE_PROCESS_BLOCK, l), C(T.POST_PROCESS_BLOCK, l);
+  C(T.PRE_PROCESS_BLOCK, c), C(T.POST_PROCESS_BLOCK, c);
 }, Q = async function* (i, e) {
   for await (const t of i)
     for (const s of t)
@@ -51,9 +51,9 @@ const H = {
     toggleIsBotTyping: r,
     toggleTextAreaDisabled: o,
     focusTextArea: a,
-    injectMessage: c,
-    streamMessage: l,
-    endStreamMessage: d,
+    injectMessage: d,
+    streamMessage: c,
+    endStreamMessage: l,
     getIsChatBotVisible: u
   } = t, p = e.providerRef.current.sendMessages(i), f = e.outputTypeRef.current, g = e.outputSpeedRef.current;
   if (f === "full") {
@@ -62,7 +62,7 @@ const H = {
       if ((M = s.signal) != null && M.aborted) break;
       h += m;
     }
-    r(!1), c(h), setTimeout(() => {
+    r(!1), d(h), setTimeout(() => {
       o(!1), u() && a();
     });
   } else {
@@ -71,18 +71,18 @@ const H = {
     for await (const E of h) {
       if ((y = s.signal) != null && y.aborted)
         break;
-      b || (r(!1), b = !0), m += E, l(m);
+      b || (r(!1), b = !0), m += E, c(m);
     }
-    d(), setTimeout(() => {
+    l(), setTimeout(() => {
       o(!1), u() && a();
     });
   }
 }, se = 500, re = (i, e) => {
   const { messagesRef: t, outputTypeRef: s, onUserMessageRef: n, onKeyDownRef: r, errorMessageRef: o } = i, {
     injectMessage: a,
-    simulateStreamMessage: c,
-    toggleTextAreaDisabled: l,
-    toggleIsBotTyping: d,
+    simulateStreamMessage: d,
+    toggleTextAreaDisabled: c,
+    toggleIsBotTyping: l,
     goToPath: u,
     focusTextArea: p,
     getIsChatBotVisible: f
@@ -91,7 +91,7 @@ const H = {
       if (!i.providerRef.current)
         return;
       const h = y.data.message, m = h.sender.toUpperCase();
-      h.tags = h.tags ?? [], h.tags.push(`rcb-llm-connector-plugin:${m}`), m === "USER" && (d(!0), l(!0), setTimeout(async () => {
+      h.tags = h.tags ?? [], h.tags.push(`rcb-llm-connector-plugin:${m}`), m === "USER" && (l(!0), c(!0), setTimeout(async () => {
         var v;
         if (n.current) {
           const R = await n.current(h);
@@ -100,9 +100,9 @@ const H = {
         }
         const b = i.historySizeRef.current, E = t.current, x = b ? [...E.slice(-(b - 1)), h] : [h], P = new AbortController();
         g.current = P, te(x, i, e, { signal: P.signal }).catch((R) => {
-          d(!1), l(!1), setTimeout(() => {
+          l(!1), c(!1), setTimeout(() => {
             f() && p();
-          }), console.error("LLM prompt failed", R), s.current === "full" ? a(o.current) : c(o.current);
+          }), console.error("LLM prompt failed", R), s.current === "full" ? a(o.current) : d(o.current);
         });
       }, se));
     },
@@ -119,12 +119,12 @@ const H = {
     return window.addEventListener("keydown", y), () => window.removeEventListener("keydown", y);
   }, []);
 }, oe = (i) => {
-  const e = S([]), t = S(null), s = S("chunk"), n = S(30), r = S(0), o = S(""), a = S("Unable to get response, please try again."), c = S(null), l = S(null), { getFlow: d } = G(), { speakAudio: u } = L(), { messages: p, injectMessage: f, simulateStreamMessage: g, streamMessage: M, endStreamMessage: y } = N(), { goToPath: h } = K(), { toggleTextAreaDisabled: m, focusTextArea: b } = J(), { toggleIsBotTyping: E, getIsChatBotVisible: x } = Y(), P = { ...H, ...i ?? {} };
+  const e = S([]), t = S(null), s = S("chunk"), n = S(30), r = S(0), o = S(""), a = S("Unable to get response, please try again."), d = S(null), c = S(null), { getFlow: l } = G(), { speakAudio: u } = L(), { messages: p, injectMessage: f, simulateStreamMessage: g, streamMessage: M, endStreamMessage: y } = N(), { goToPath: h } = K(), { toggleTextAreaDisabled: m, focusTextArea: b } = J(), { toggleIsBotTyping: E, getIsChatBotVisible: x } = Y(), P = { ...H, ...i ?? {} };
   z(() => {
     e.current = p;
-  }, [p]), q(d, (w) => {
-    var k, B, U, F, I, W, j, D, $, _;
-    t.current = ((k = w.llmConnector) == null ? void 0 : k.provider) ?? null, s.current = ((B = w.llmConnector) == null ? void 0 : B.outputType) ?? "chunk", n.current = ((U = w.llmConnector) == null ? void 0 : U.outputSpeed) ?? 30, r.current = ((F = w.llmConnector) == null ? void 0 : F.historySize) ?? 0, o.current = ((I = w.llmConnector) == null ? void 0 : I.initialMessage) ?? "", a.current = ((W = w.llmConnector) == null ? void 0 : W.errorMessage) ?? "Unable to get response, please try again.", c.current = ((D = (j = w.llmConnector) == null ? void 0 : j.stopConditions) == null ? void 0 : D.onUserMessage) ?? null, l.current = ((_ = ($ = w.llmConnector) == null ? void 0 : $.stopConditions) == null ? void 0 : _.onKeyDown) ?? null;
+  }, [p]), q(l, (w) => {
+    var k, B, U, F, I, W, D, $, j, _;
+    t.current = ((k = w.llmConnector) == null ? void 0 : k.provider) ?? null, s.current = ((B = w.llmConnector) == null ? void 0 : B.outputType) ?? "chunk", n.current = ((U = w.llmConnector) == null ? void 0 : U.outputSpeed) ?? 30, r.current = ((F = w.llmConnector) == null ? void 0 : F.historySize) ?? 0, o.current = ((I = w.llmConnector) == null ? void 0 : I.initialMessage) ?? "", a.current = ((W = w.llmConnector) == null ? void 0 : W.errorMessage) ?? "Unable to get response, please try again.", d.current = (($ = (D = w.llmConnector) == null ? void 0 : D.stopConditions) == null ? void 0 : $.onUserMessage) ?? null, c.current = ((_ = (j = w.llmConnector) == null ? void 0 : j.stopConditions) == null ? void 0 : _.onKeyDown) ?? null;
   });
   const v = {
     providerRef: t,
@@ -134,8 +134,8 @@ const H = {
     historySizeRef: r,
     initialMessageRef: o,
     errorMessageRef: a,
-    onUserMessageRef: c,
-    onKeyDownRef: l
+    onUserMessageRef: d,
+    onKeyDownRef: c
   }, R = {
     speakAudio: u,
     injectMessage: f,
@@ -181,17 +181,17 @@ class ce {
       return this.messageParser ? n = this.messageParser(s) : n = s.filter(
         (o) => typeof o.content == "string" && o.sender.toUpperCase() !== "SYSTEM"
       ).map((o) => {
-        const a = this.roleMap(o.sender.toUpperCase()), c = o.content;
+        const a = this.roleMap(o.sender.toUpperCase()), d = o.content;
         return {
           role: a,
-          parts: [{ text: c }]
+          parts: [{ text: d }]
         };
       }), this.systemMessage && (n = [{ role: "user", parts: [{ text: this.systemMessage }] }, ...n]), {
         contents: n,
         ...this.body
       };
     }, this.handleStreamResponse = async function* (s) {
-      var o, a, c, l, d;
+      var o, a, d, c, l;
       const n = new TextDecoder("utf-8");
       let r = "";
       for (; ; ) {
@@ -206,7 +206,7 @@ class ce {
           if (!M.startsWith("data: ")) continue;
           const y = M.slice(6);
           try {
-            const m = (d = (l = (c = (a = (o = JSON.parse(y).candidates) == null ? void 0 : o[0]) == null ? void 0 : a.content) == null ? void 0 : c.parts) == null ? void 0 : l[0]) == null ? void 0 : d.text;
+            const m = (l = (c = (d = (a = (o = JSON.parse(y).candidates) == null ? void 0 : o[0]) == null ? void 0 : a.content) == null ? void 0 : d.parts) == null ? void 0 : c[0]) == null ? void 0 : l.text;
             m && (yield m);
           } catch (h) {
             console.error("SSE JSON parse error:", y, h);
@@ -234,11 +234,11 @@ class ce {
   async *sendMessages(e) {
     var s, n, r, o, a;
     if (this.debug) {
-      const c = this.endpoint.replace(/\?key=([^&]+)/, "?key=[REDACTED]"), l = { ...this.headers };
+      const d = this.endpoint.replace(/\?key=([^&]+)/, "?key=[REDACTED]"), c = { ...this.headers };
       console.log("[GeminiProvider] Request:", {
         method: this.method,
-        endpoint: c,
-        headers: l,
+        endpoint: d,
+        headers: c,
         body: this.constructBodyWithMessages(e)
       });
     }
@@ -252,15 +252,15 @@ class ce {
     if (this.responseFormat === "stream") {
       if (!t.body)
         throw new Error("Response body is empty – cannot stream");
-      const c = t.body.getReader();
-      for await (const l of this.handleStreamResponse(c))
-        yield l;
+      const d = t.body.getReader();
+      for await (const c of this.handleStreamResponse(d))
+        yield c;
     } else {
-      const c = await t.json();
-      this.debug && console.log("[GeminiProvider] Response body:", c);
-      const l = (a = (o = (r = (n = (s = c.candidates) == null ? void 0 : s[0]) == null ? void 0 : n.content) == null ? void 0 : r.parts) == null ? void 0 : o[0]) == null ? void 0 : a.text;
-      if (typeof l == "string")
-        yield l;
+      const d = await t.json();
+      this.debug && console.log("[GeminiProvider] Response body:", d);
+      const c = (a = (o = (r = (n = (s = d.candidates) == null ? void 0 : s[0]) == null ? void 0 : n.content) == null ? void 0 : r.parts) == null ? void 0 : o[0]) == null ? void 0 : a.text;
+      if (typeof c == "string")
+        yield c;
       else
         throw new Error("Unexpected response shape – no text candidate");
     }
@@ -302,12 +302,12 @@ class de {
       const s = new TextDecoder("utf-8");
       let n = "";
       for (; ; ) {
-        const { value: c, done: l } = await t.read();
-        if (l) break;
-        n += s.decode(c, { stream: !0 });
-        const d = n.split(/\r?\n/);
-        n = d.pop();
-        for (const u of d) {
+        const { value: d, done: c } = await t.read();
+        if (c) break;
+        n += s.decode(d, { stream: !0 });
+        const l = n.split(/\r?\n/);
+        n = l.pop();
+        for (const u of l) {
           if (!u.startsWith("data: ")) continue;
           const p = u.slice(6).trim();
           if (p === "[DONE]") return;
@@ -429,7 +429,7 @@ class le {
    * @param messages messages to include in the request
    */
   async *sendMessages(e) {
-    var s, n, r, o, a, c;
+    var s, n, r, o, a, d;
     this.engine || await this.createEngine(), this.debug && console.log("[WebLlmProvider] Request:", {
       model: this.model,
       systemMessage: this.systemMessage,
@@ -441,11 +441,11 @@ class le {
     });
     const t = await ((s = this.engine) == null ? void 0 : s.chat.completions.create(this.constructBodyWithMessages(e)));
     if (this.debug && console.log("[WebLlmProvider] Response:", t), t && Symbol.asyncIterator in t)
-      for await (const l of t) {
-        const d = (r = (n = l.choices[0]) == null ? void 0 : n.delta) == null ? void 0 : r.content;
-        d && (yield d);
+      for await (const c of t) {
+        const l = (r = (n = c.choices[0]) == null ? void 0 : n.delta) == null ? void 0 : r.content;
+        l && (yield l);
       }
-    else (c = (a = (o = t == null ? void 0 : t.choices) == null ? void 0 : o[0]) == null ? void 0 : a.message) != null && c.content && (yield t.choices[0].message.content);
+    else (d = (a = (o = t == null ? void 0 : t.choices) == null ? void 0 : o[0]) == null ? void 0 : a.message) != null && d.content && (yield t.choices[0].message.content);
   }
 }
 class he {
@@ -488,17 +488,14 @@ class he {
         n += s.decode(r, { stream: !0 });
         const a = n.split(/\r?\n/);
         n = a.pop();
-        for (const c of a) {
-          if (!c.startsWith("data: ")) continue;
-          const l = c.slice(6).trim();
+        for (const d of a)
           try {
-            const d = JSON.parse(l);
-            if (console.log(d), d.done === !0) return;
-            d.message && typeof d.message.content == "string" && (yield d.message.content);
-          } catch (d) {
-            console.error("Stream parse error", d);
+            const c = JSON.parse(d);
+            if (c.done === !0) return;
+            c.message && typeof c.message.content == "string" && (yield c.message.content);
+          } catch (c) {
+            console.error("Stream parse error", c);
           }
-        }
       }
     }, this.method = e.method ?? "POST", this.endpoint = e.baseUrl ?? "http://localhost:11434/api/chat", this.systemMessage = e.systemMessage, this.responseFormat = e.responseFormat ?? "stream", this.messageParser = e.messageParser, this.debug = e.debug ?? !1, this.headers = {
       "Content-Type": "application/json",
@@ -513,7 +510,7 @@ class he {
       return;
     }
     if (e.mode !== "proxy")
-      throw Error("Invalid mode specified for OpenAI provider ('direct' or 'proxy').");
+      throw Error("Invalid mode specified for Ollama provider ('direct' or 'proxy').");
   }
   /**
    * Calls Openai and yields each chunk (or the full text).
@@ -524,7 +521,7 @@ class he {
     var s, n, r;
     if (this.debug) {
       const o = { ...this.headers };
-      delete o.Authorization, console.log("[OpenaiProvider] Request:", {
+      delete o.Authorization, console.log("[OllamaProvider] Request:", {
         method: this.method,
         endpoint: this.endpoint,
         headers: o,
@@ -536,8 +533,8 @@ class he {
       headers: this.headers,
       body: JSON.stringify(this.constructBodyWithMessages(e))
     });
-    if (this.debug && console.log("[OpenaiProvider] Response status:", t.status), !t.ok)
-      throw new Error(`Openai API error ${t.status}: ${await t.text()}`);
+    if (this.debug && console.log("[OllamaProvider] Response status:", t.status), !t.ok)
+      throw new Error(`Ollama API error ${t.status}: ${await t.text()}`);
     if (this.responseFormat === "stream") {
       if (!t.body)
         throw new Error("Response body is empty – cannot stream");
@@ -546,7 +543,7 @@ class he {
         yield a;
     } else {
       const o = await t.json();
-      this.debug && console.log("[OpenaiProvider] Response body:", o);
+      this.debug && console.log("[OllamaProvider] Response body:", o);
       const a = (r = (n = (s = o.choices) == null ? void 0 : s[0]) == null ? void 0 : n.message) == null ? void 0 : r.content;
       if (typeof a == "string")
         yield a;
