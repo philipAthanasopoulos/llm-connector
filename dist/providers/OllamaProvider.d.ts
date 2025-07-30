@@ -2,7 +2,7 @@ import { Provider } from '../types/Provider';
 import { Message } from 'react-chatbotify';
 import { OpenaiProviderConfig } from '../types/provider-config/OpenaiProviderConfig';
 /**
- * Provider for Openai’s API, supports both direct and proxy modes.
+ * Provider for Ollama’s API, supports both direct and proxy modes.
  */
 declare class OllamaProvider implements Provider {
     private method;
@@ -21,7 +21,7 @@ declare class OllamaProvider implements Provider {
      */
     constructor(config: OpenaiProviderConfig);
     /**
-     * Calls Openai and yields each chunk (or the full text).
+     * Calls Ollama and yields each chunk (or the full text).
      *
      * @param messages messages to include in the request
      */

@@ -118,7 +118,7 @@ const App = () => {
 					mode: 'direct',
 					model: 'robot',
 					apiKey: '',
-					debug:true,
+					debug: true,
 				}),
 				outputType: 'character',
 				stopConditions: {

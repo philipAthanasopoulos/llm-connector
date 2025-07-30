@@ -513,7 +513,7 @@ class he {
       throw Error("Invalid mode specified for Ollama provider ('direct' or 'proxy').");
   }
   /**
-   * Calls Openai and yields each chunk (or the full text).
+   * Calls Ollama and yields each chunk (or the full text).
    *
    * @param messages messages to include in the request
    */
