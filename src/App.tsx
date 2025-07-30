@@ -5,6 +5,7 @@ import { LlmConnectorBlock } from './types/LlmConnectorBlock';
 import GeminiProvider from './providers/GeminiProvider';
 import OpenaiProvider from './providers/OpenaiProvider';
 import WebLlmProvider from './providers/WebLlmProvider';
+import OllamaProvider from './providers/OllamaProvider';
 
 // fill in your api keys below if you wish to explore/develop
 const geminiApiKey = '';
@@ -102,6 +103,18 @@ const App = () => {
 					model: 'gpt-4.1-nano',
 					responseFormat: 'stream',
 					apiKey: openaiApiKey,
+				}),
+				outputType: 'character',
+				stopConditions: {
+					onUserMessage: onUserMessageCheck,
+					onKeyDown: onKeyDownCheck,
+				},
+			},
+		} as LlmConnectorBlock,
+		ollama: {
+			llmConnector: {
+				provider: new OllamaProvider({
+					model: 'gemma3',
 				}),
 				outputType: 'character',
 				stopConditions: {
