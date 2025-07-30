@@ -114,7 +114,10 @@ const App = () => {
 		ollama: {
 			llmConnector: {
 				provider: new OllamaProvider({
-					model: 'gemma3',
+					baseUrl: 'http://localhost:11434/api/chat',
+					mode: 'direct',
+					model: 'robot',
+					apiKey: '',
 				}),
 				outputType: 'character',
 				stopConditions: {
